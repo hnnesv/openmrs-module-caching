@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module configVersion="1.2">
+
+	<!-- Module Properties -->
+	<id>${project.parent.artifactId}</id>
+	<name>${project.parent.name}</name>
+	<version>${project.parent.version}</version>
+	<package>${project.parent.groupId}.${project.parent.artifactId}</package>
+	<author>Hannes Venter</author>
+	<description>
+		${project.parent.description}
+	</description>
+	<updateURL>https://modules.openmrs.org/modules/download/${project.parent.artifactId}/update.rdf</updateURL>
+	<require_version>${openMRSVersion}</require_version>
+	<!-- / Module Properties -->
+
+	<require_modules>
+		<require_module version="0.2.7">org.openmrs.module.serialization.xstream</require_module>
+	</require_modules>
+
+	<globalProperty>
+		<property>caching.backend</property>
+		<defaultValue>ehcache</defaultValue>
+		<description>The caching backend to use. The current options are 'ehcache' and 'memcached'. Requires restart.</description>
+	</globalProperty>
+	<globalProperty>
+		<property>caching.timetolive</property>
+		<defaultValue>0</defaultValue>
+		<description>The time in seconds that an object can be cached for. Use 0 if you don't care. There is no option for forever.</description>
+	</globalProperty>
+	<globalProperty>
+		<property>caching.memcached.host</property>
+		<defaultValue>127.0.0.1</defaultValue>
+		<description>Memcached backend: Server address</description>
+	</globalProperty>
+	<globalProperty>
+		<property>caching.memcached.port</property>
+		<defaultValue>11211</defaultValue>
+		<description>Memcached backend: Server port</description>
+	</globalProperty>
+	
+	<!-- Module Activator -->
+	<activator>${project.parent.groupId}.${project.parent.artifactId}.CachingActivator</activator>
+	
+	<advice>
+		<point>org.openmrs.api.EncounterService</point>
+		<class>org.openmrs.module.caching.advice.CachingEncounterAdvice</class>
+	</advice>
+	
+	<!-- Internationalization -->
+	<!-- All message codes should start with ${project.parent.artifactId}. -->
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	<messages>
+		<lang>fr</lang>
+		<file>messages_fr.properties</file>
+	</messages>
+	<messages>
+		<lang>es</lang>
+		<file>messages_es.properties</file>
+	</messages>
+	<!-- /Internationalization -->
+
+</module>
+
